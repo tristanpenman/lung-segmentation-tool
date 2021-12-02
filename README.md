@@ -1,8 +1,6 @@
 # Lung Segmentation Tool
 
-## Overview
-
-This package contains scripts to perform lung segmentation on a CT scan, and view the result using OpenGL.
+This package contains scripts to perform lung segmentation on a CT scan. These have been combined into a simple visualisation tool that can be used to inspect CT scans using OpenGL.
 
 The segmentation functions are based on a traditional CV-based algorithm, described in the [Kaggle DSB 2017 Tutorial](https://www.kaggle.com/c/data-science-bowl-2017#tutorial).
 
@@ -16,26 +14,40 @@ To get the source code and install dependencies:
     cd lung-segmentation-tool
     pip install -r requirements.txt
 
-You may choose to install the package on your system:
+You may also choose to install the package on your system:
 
     pip install .
 
 ## Usage
 
-Included in this package is an executable script called `lung-segmentation-tool`, which can be used to load CT scans in MetaImage (.mhd) and DICOM (.dcm) format.
+Included in this package is a visualisation tool called `lung-segmentation-tool`. This can be used to load CT scans in MetaImage (.mhd) and DICOM (.dcm) format.
 
-This tool can be launched from the command line, with options to configure the step size of the generated mesh:
+You can launch the visualisation tool from the command line, using options that configure the step size of the generated mesh:
 
     lung-segmentation-tool \
         --scan-path ${PATH_TO_SCAN} \
         --step-size 1
 
-Choosing a larger step size will shorten the time taken to generate a mesh, at the cost of lower detail.
+Choosing a larger step size will shorten the time taken to generate a mesh, but will result in lower detail.
 
-If you have cloned the git repository, but not installed the package, you may need to set your `PYTHONPATH` environment variable when running `lung-segmentation-tool`:
+If you have cloned the git repository but not installed the package, you should still be able to run the visualisation tool locally:
 
-    PYTHONPATH=`pwd` ./bin/lung-segmentation-tool \
+    ./bin/lung-segmentation-tool \
         --scan-path ${PATH_TO_SCAN} \
+        --step-size 1
+
+## Example
+
+An example CT scan is included in the [data](./data) directory. CT scans tend to be quite large, so this scan has been compressed using `xz`. Before using this scan, you'll need to decompress it:
+
+    cd data
+    tar xvf 1.3.6.1.4.1.14519.5.2.1.6279.6001.219909753224298157409438012179.tar.xz
+    cd ..
+
+Now you can run it through the visualisation tool:
+
+    ./bin/lung-segmentation-tool \
+        --scan-path data/1.3.6.1.4.1.14519.5.2.1.6279.6001.219909753224298157409438012179.mhd \
         --step-size 1
 
 ## Screenshot

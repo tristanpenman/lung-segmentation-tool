@@ -1,3 +1,7 @@
+# CT scans
+data/*.raw
+data/*.mhd
+
 # Compiled python modules.
 *.pyc
 

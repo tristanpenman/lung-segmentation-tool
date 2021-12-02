@@ -5,7 +5,10 @@ import click
 import numpy as np
 import os
 import pyglet
+import sys
 import time
+
+sys.path.append(".")
 
 from lung_segmentation_tool.loaders import load_dicom_files, load_mhd_file
 from lung_segmentation_tool.segmenter import generate_mesh_from_scan, segment_lungs
