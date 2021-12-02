@@ -10,7 +10,7 @@ SCRIPTS = [
     'bin/lung-segmentation-tool'
 ]
 
-REQUIRES = [
+INSTALL_REQUIRES = [
     'click', 'euclid3', 'numpy', 'opencv-python', 'pydicom', 'pyglet', 'scikit-image', 'SimpleITK'
 ]
 
@@ -20,6 +20,6 @@ setup(name='Lung Segmentation Tool',
       scripts=SCRIPTS,
       url='https://github.com/tristanpenman/lung-segmentation-tool',
       description=DESCRIPTION,
-      requires=REQUIRES,
+      install_requires=INSTALL_REQUIRES,
       license='MIT'
       )
