@@ -6,7 +6,9 @@ The segmentation functions are based on a traditional CV-based algorithm, descri
 
 ## Requirements
 
-This package requires Python 3.
+This package requires Python 3.12.
+
+All critical dependencies are locked to compatible versions in `requirements.txt`.
 
 To get the source code and install dependencies:
 
