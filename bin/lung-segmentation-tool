@@ -15,6 +15,7 @@ from lung_segmentation_tool.segmenter import generate_mesh_from_scan, segment_lu
 from lung_segmentation_tool.util import get_pixels_in_hounsfield_units, normalize
 
 
+
 readable = click.Path(exists=True, file_okay=True, dir_okay=True, resolve_path=True, readable=True)
 
 scan_path_help = \

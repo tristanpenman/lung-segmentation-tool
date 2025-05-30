@@ -2,10 +2,12 @@
 
 import ctypes
 import math
+import pyglet
 
-from euclid3 import Quaternion, Vector3, Matrix4, Point3, Ray3, Sphere
+from euclid3 import Quaternion, Vector3, Matrix4
 
 from pyglet.gl import *
+from pyglet.gl.gl_compat import *
 from pyglet.window import mouse, Window
 
 
@@ -109,7 +111,7 @@ class Viewer(Window):
         init_texture_params()
 
     def draw_coronal(self):
-        viewport_size = self.get_viewport_size()
+        viewport_size = (self.width, self.height)
         coronal_size = math.ceil(self.transverse_size / 2.0)
         viewport = [viewport_size[0] - math.floor(self.viewport_scale * coronal_size), 0,
                     math.ceil(self.viewport_scale * coronal_size),
@@ -138,7 +140,7 @@ class Viewer(Window):
         draw_line(0, y, coronal_size, y, [0.0, 0.0, 1.0], 2.0, self.viewport_scale)
 
     def draw_mesh(self):
-        viewport_size = self.get_viewport_size()
+        viewport_size = (self.width, self.height)
         viewport = [0, 0, int(self.segmented_width * self.viewport_scale), viewport_size[1]]
 
         # Setup viewport and projection matrix for 2D orthogonal view
@@ -293,7 +295,7 @@ class Viewer(Window):
     def on_move(self, x, y):
         # HACK: Ensures that change in DPI is handled on Mac; may be required on Linux / Windows
         if pyglet.options['darwin_cocoa']:
-            viewport_width, _ = self.get_viewport_size()
+            viewport_width = self.width
             width, height = self.get_size()
             if viewport_width / width != self.viewport_scale:
                 # Ensure window can be 'resized' without animation
@@ -306,7 +308,7 @@ class Viewer(Window):
 
     def on_resize(self, width, height):
         if self.visible:
-            viewport_size = self.get_viewport_size()
+            viewport_size = (self.width, self.height)
             self.viewport_scale = viewport_size[0] / width
             self.transverse_size = math.ceil(2.0 * height / 3.0)
             self.segmented_width = width - self.transverse_size
@@ -329,7 +331,7 @@ class Viewer(Window):
         # noinspection PyCallingNonCallable,PyTypeChecker
         image_ptr = (GLfloat * num_pixels)(*image.flatten())
         glBindTexture(GL_TEXTURE_2D, self.coronal_texture_id)
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, shape[1], shape[0], 0, GL_LUMINANCE, GL_FLOAT,
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, shape[1], shape[0], 0, GL_RED, GL_FLOAT,
                      image_ptr)
 
     def update_sagittal_texture(self):
@@ -339,7 +341,7 @@ class Viewer(Window):
         # noinspection PyCallingNonCallable,PyTypeChecker
         image_ptr = (GLfloat * num_pixels)(*image.flatten())
         glBindTexture(GL_TEXTURE_2D, self.sagittal_texture_id)
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, shape[2], shape[0], 0, GL_LUMINANCE, GL_FLOAT,
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, shape[2], shape[0], 0, GL_RED, GL_FLOAT,
                      image_ptr)
 
     def update_transverse_texture(self):
@@ -349,7 +351,7 @@ class Viewer(Window):
         # noinspection PyCallingNonCallable,PyTypeChecker
         image_ptr = (GLfloat * num_pixels)(*image.flatten())
         glBindTexture(GL_TEXTURE_2D, self.transverse_texture_id)
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, shape[1], shape[2], 0, GL_LUMINANCE, GL_FLOAT,
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, shape[1], shape[2], 0, GL_RED, GL_FLOAT,
                      image_ptr)
 
     def update_vertex_buffer(self, vertices):

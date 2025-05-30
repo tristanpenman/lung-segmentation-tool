@@ -8,7 +8,7 @@ from skimage import measure
 def generate_mesh_from_scan(binary_image, step_size):
     threshold = 0
     p = binary_image.transpose(2, 1, 0)
-    return measure.marching_cubes_lewiner(p, threshold, step_size=step_size)
+    return measure.marching_cubes(p, threshold, step_size=step_size)
 
 
 def largest_label_volume(im, bg=-1):

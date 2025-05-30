@@ -60,19 +60,19 @@ On the left is the segmentation view. You can rotate and zoom using the left-mou
 
 On the top-right is the transverse view.
 
-Below that are two views. On the left is the sagital view, and on the right is the frontal view.
+Below that are two views. On the left is the sagittal view, and on the right is the frontal view.
 
 Clicking and dragging on the transverse view will change slices shown on the views below it.
 
 ## Known issues and limitations
 
-Interaction with the transverse, sagital and frontal views is limited.
+Interaction with the transverse, sagittal and frontal views is limited.
 
-Currently only the transverse view will respond to mouse events, changing the slices in the sagital and frontal views to be centered at the location that is selected.
+Currently only the transverse view will respond to mouse events, changing the slices in the sagittal and frontal views to be centered at the location that is selected.
 
-The sagital and frontal views do not respond to mouse events at all.
+The sagittal and frontal views do not respond to mouse events at all.
 
-The aim is add planes to the 3D segmented view, to show exactly which location in the scan has been selected via the 2D views.
+My aim is to add planes to the 3D segmented view, to show exactly which location in the scan has been selected via the 2D views.
 
 ## License
 

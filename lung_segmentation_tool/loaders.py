@@ -3,7 +3,7 @@
 import os
 import numpy as np
 import pydicom
-import SimpleITK as sitk
+import SimpleITK
 
 
 def load_dicom_files(scan_path):
@@ -23,7 +23,7 @@ def load_dicom_files(scan_path):
 
 
 def load_mhd_file(scan_path):
-    itk_img = sitk.ReadImage(scan_path)
-    img_array = sitk.GetArrayFromImage(itk_img)
+    itk_img = SimpleITK.ReadImage(scan_path)
+    img_array = SimpleITK.GetArrayFromImage(itk_img)
     size = itk_img.GetSize()
     return img_array, np.array(itk_img.GetSpacing())[::-1], size[1], size[0]
