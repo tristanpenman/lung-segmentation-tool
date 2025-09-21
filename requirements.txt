@@ -6,7 +6,7 @@ networkx==3.5
 numpy==2.2.6
 opencv-python==4.11.0.86
 packaging==25.0
-pillow==11.2.1
+pillow==11.3.0
 pydicom==1.2.1
 pyglet==2.1.6
 scikit-image==0.25.2
