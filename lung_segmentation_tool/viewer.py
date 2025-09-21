@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""Interactive viewer for scans and segmented lung volume."""
 
 import ctypes
 import math

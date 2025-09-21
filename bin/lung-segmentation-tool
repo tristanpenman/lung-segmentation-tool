@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """Shim entry point for the lung segmentation tool CLI."""
 
 from lung_segmentation_tool.cli import main

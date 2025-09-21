@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""Helper functions for loading scan data."""
 
 import os
 import numpy as np

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""Helper functions for segmentation of lung volume from scans."""
 
 import numpy as np
 

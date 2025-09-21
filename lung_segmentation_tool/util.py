@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""Math helper functions and conversions between units."""
 
 import numpy as np
 
