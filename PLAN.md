@@ -1,7 +1,7 @@
 # Plan
 
 * General improvements (**in progress**)
-  * Get viewer working on macOS
+  * ~~Get viewer working on macOS~~
   * Update dependencies
   * Modernise Python and introduce types
 * Interfaces
