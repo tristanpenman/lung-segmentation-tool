@@ -1,0 +1,70 @@
+"""Command-line interface for the lung segmentation tool."""
+
+import os
+import time
+
+import click
+import numpy as np
+import pyglet
+
+from .loaders import load_dicom_files, load_mhd_file
+from .segmenter import generate_mesh_from_scan, segment_lungs
+from .util import get_pixels_in_hounsfield_units, normalize
+
+
+readable = click.Path(
+    exists=True, file_okay=True, dir_okay=True, resolve_path=True, readable=True
+)
+
+scan_path_help = "Path to a MetaImage (.mhd) file or a directory containing DICOM (.dcm) files"
+
+step_size_help = "Step size to use when generating a mesh from the segmented lung region"
+
+
+@click.group(no_args_is_help=True, invoke_without_command=True)
+@click.option("--scan-path", type=readable, required=True, help=scan_path_help)
+@click.option("--step-size", type=int, default=1, help=step_size_help)
+def main(scan_path: str, step_size: int) -> None:
+    """Segment a CT scan and display the result in a viewer."""
+    if os.path.isfile(scan_path):
+        print("Loading scan as MHD format...")
+        scan, spacing, rows, columns = load_mhd_file(scan_path)
+    else:
+        print("Loading scan as Dicom format...")
+        scan, spacing, rows, columns = load_dicom_files(scan_path)
+        scan = get_pixels_in_hounsfield_units(scan)
+
+    print("Read", len(scan), "slices at a thickness of", spacing[0], "mm")
+
+    print("Segmenting lungs from CT scan...")
+    binary_image = segment_lungs(scan)
+
+    print("Generating mesh...")
+    vertices, faces, _, _ = generate_mesh_from_scan(binary_image, step_size)
+
+    # Rescale and center vertices
+    vertices = np.array(vertices)
+    vertices *= np.array([spacing[2], spacing[1], spacing[0]])
+    vertices -= np.array(
+        [
+            0.5 * columns * spacing[2],
+            0.5 * rows * spacing[1],
+            0.5 * len(scan) * spacing[0],
+        ]
+    )
+
+    from .viewer import Viewer
+
+    scan = normalize(scan)
+    viewer = Viewer(860, 500, scan, vertices.flatten(), faces.flatten())
+    # HACK: Seems to fix a Pyglet issue which causes the window to remain inactive after creation
+    time.sleep(1)
+    viewer.set_visible(True)
+    pyglet.app.run()
+
+
+__all__ = ["main"]
+
+
+if __name__ == "__main__":
+    main()
