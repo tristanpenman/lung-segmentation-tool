@@ -261,7 +261,6 @@ class Viewer(Window):
         gl.glScissor(*viewport)
 
         # Draw mesh
-        gl.glEnable(gl.GL_DEPTH_TEST)
         gl.glEnable(gl.GL_BLEND)
         gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
         gl.glClearColor(0.2, 0.2, 0.2, 1.0)
@@ -390,7 +389,7 @@ class Viewer(Window):
             self.zoom -= scroll_y * 3.0
             self.view_matrix = generate_view_matrix(self.rotation, self.zoom)
             self.on_draw()
-        elif y > self.get_size()[1] - self.transverse_size:
+        else:
             self.transverse_position -= scroll_y
             max_index = self.scan.shape[0] - 1
             self.transverse_position = min(max(0.0, self.transverse_position), float(max_index))
