@@ -29,7 +29,7 @@ def segment_lungs(image, fill_lung_structures=True):
     binary_image[background_label == labels] = 2
 
     if fill_lung_structures:
-        for i, axial_slice in enumerate(binary_image):
+        for axial_slice in binary_image:
             # Back to 0s and 1s
             axial_slice = axial_slice - 1
             # Label connected regions in slice
@@ -37,7 +37,7 @@ def segment_lungs(image, fill_lung_structures=True):
             # Find largest connected region, indicating presence of lung tissue
             l_max = largest_label_volume(labeling, bg=0)
             if l_max is not None:
-                binary_image[i][labeling != l_max] = 1
+                axial_slice[labeling != l_max] = 1
 
     # Back to 0s and 1s; and invert
     binary_image -= 1
